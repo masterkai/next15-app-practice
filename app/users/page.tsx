@@ -1,20 +1,18 @@
-interface User {
-	id: number;
-	name: string;
+import UsersTable from "@/app/users/UsersTable";
+
+interface Props {
+	searchParams: {
+		sortOrder: string;
+	}
 }
 
-const UsersPage = async () => {
-	const res = await fetch('https://jsonplaceholder.typicode.com/users', {
-		next: {
-			revalidate: 10
-		}
-	})
-	const users: User[] = await res.json()
+const UsersPage = async ({searchParams}:Props) => {
+
 	return (
 		<>
 			<h1>Users</h1>
-			<p>{new Date().toLocaleString()}</p>
-			<ul>{users.map(u => <li key={u.id}>{u.name}</li>)}</ul>
+
+			<UsersTable sortOrder={ searchParams.sortOrder }/>
 		</>
 	)
 
